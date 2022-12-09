@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+    <bean id="helloWorld" class="com.example.spring.pojo.HelloSpring"></bean>
+    <bean id="studentOne" class="com.example.spring.pojo.Student"></bean>
+    <bean id="studentTwo" class="com.example.spring.pojo.Student">
+        <property name="sname" value="evan"></property>
+        <property name="sid" value="1"></property>
+        <property name="gender" value="男"></property>
+        <property name="age" value="23"></property>
+    </bean>
+<!--    <bean id="studentThree" class="com.example.spring.pojo.Student">-->
+<!--        <constructor-arg value="1001"></constructor-arg>-->
+<!--        <constructor-arg value="李四"></constructor-arg>-->
+<!--        <constructor-arg value="24"></constructor-arg>-->
+<!--        <constructor-arg value="女"></constructor-arg>-->
+<!--    </bean>-->
+    <bean id="studentFour" class="com.example.spring.pojo.Student">
+<!--        <property name="sname" value="&lt;evan"></property>-->
+        <property name="sname">
+            <value><![CDATA[<王五>]]></value>
+        </property>
+        <property name="sid" value="1"></property>
+        <property name="gender">
+            <null/>
+        </property>
+        <property name="age" value="23"></property>
+    </bean>
+    <bean id="CS" class="com.example.spring.pojo.Department">
+        <property name="id" value="1"></property>
+        <property name="name" value="计算机专业"></property>
+<!--        <property name="students">-->
+<!--            <list>-->
+<!--                <ref bean="studentFive"></ref>-->
+<!--                <ref bean="studentOne"></ref>-->
+<!--                <ref bean="studentTwo"></ref>-->
+<!--            </list>-->
+<!--        </property>-->
+        <property name="students" ref="studentList"></property>
+    </bean>
+    <bean id="studentFive" class="com.example.spring.pojo.Student">
+        <property name="sname" value="赵六"></property>
+        <property name="age" value="21"></property>
+        <property name="gender" value="男"></property>
+        <property name="sid" value="5"></property>
+<!--        <property name="department" ref="CS"></property>-->
+<!--        <property name="department.name" value="Japanese"></property>-->
+<!--        <property name="department.id" value="2"></property>-->
+        <property name="department">
+            <bean id="departmentInner" class="com.example.spring.pojo.Department">
+                <property name="id" value="3"></property>
+                <property name="name" value="Chemistry"></property>
+            </bean>
+        </property>
+        <property name="hobbies">
+            <array>
+                <value>抽烟</value>
+                <value>喝酒</value>
+                <value>烫头</value>
+            </array>
+        </property>
+<!--        <property name="teacherMap">-->
+<!--            <map>-->
+<!--                <entry key="1001" value-ref="teacherOne"></entry>-->
+<!--                <entry key="1002" value-ref="teacherTwo"></entry>-->
+<!--            </map>-->
+<!--        </property>-->
+        <property name="teacherMap" ref="TeacherMap"></property>
+    </bean>
+<!--    配置一个集合类型的bean需要加util约束-->
+    <util:list id="studentList">
+        <ref bean="studentFive"></ref>
+        <ref bean="studentOne"></ref>
+        <ref bean="studentTwo"></ref>
+    </util:list>
+    <bean name="teacherOne" class="com.example.spring.pojo.Teacher">
+        <property name="tid" value="1001"></property>
+        <property name="tname" value="大宝"></property>
+    </bean>
+    <bean name="teacherTwo" class="com.example.spring.pojo.Teacher">
+        <property name="tid" value="1002"></property>
+        <property name="tname" value="小宝"></property>
+    </bean>
+    <util:map id="TeacherMap">
+        <entry key="1001" value-ref="teacherOne"></entry>
+        <entry key="1002" value-ref="teacherTwo"></entry>
+    </util:map>
+
+</beans>
